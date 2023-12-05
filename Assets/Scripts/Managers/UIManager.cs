@@ -25,20 +25,41 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         
         canvas.worldCamera = Camera.main;
 
-        _gameScreen = screens.FirstOrDefault(popup => popup.PopupType == PopupType.GameLevel) as GameScreen;
+        _gameScreen = screens.FirstOrDefault(popup => popup.PopupType == PopupType.GameScore) as GameScreen;
     }
 
 
     private void Start()
     {
-        //ShowPopup(PopupType.Menu);
-        //ShowPopup(PopupType.GameLevel);
+        ShowPopup(PopupType.Menu);
+    }
+
+
+    public void UpdateBonus()
+    {
+        var screen = screens.FirstOrDefault(popup => popup.PopupType == PopupType.Menu) as MenuScreen;
+
+        if (screen != null)
+        {
+            screen.UpdateBonus();
+        }
     }
 
 
     public void ShowPopup(PopupType type)
     {
         var screen = screens.FirstOrDefault(popup => popup.PopupType == type);
+
+        if (screen != null)
+        {
+            screen.Show();
+        }
+    }
+
+
+    public void ShowResult()
+    {
+        var screen = screens.FirstOrDefault(popup => popup.PopupType == PopupType.ResultScore);
 
         if (screen != null)
         {

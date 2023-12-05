@@ -1,16 +1,23 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class GameScreen : PopupBase
 {
     [Space]
     [SerializeField] private ButtonBase pauseButton;
-    [SerializeField] private Text timer;
+    [SerializeField] private SelfDestruct scoreBubblePrefab;
     [Space]
     [SerializeField] private ButtonBase tutorialButton;
-    [SerializeField] private List<GameObject> stateObjects;
+
+
+    public void CreateBubble()
+    {
+        var newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var newBubble = Instantiate(scoreBubblePrefab, transform);
+
+        newPosition = new Vector3(newPosition.x, newPosition.y, 10f);
+        newBubble.transform.position = newPosition;
+    }
 
 
     public void SetTutorial(bool isLonger)
@@ -18,19 +25,8 @@ public class GameScreen : PopupBase
         var timerValue = isLonger
             ? 120
             : 90;
-
-        UpdateTimer(timerValue);
-
-        stateObjects[0].SetActive(!isLonger);
-        stateObjects[1].SetActive(isLonger);
-
+        
         tutorialButton.gameObject.SetActive(true);
-    }
-
-
-    public void UpdateTimer(int value)
-    {
-        timer.text = $"{value} sec";
     }
 
 
@@ -55,6 +51,7 @@ public class GameScreen : PopupBase
     private void PauseButton_OnClick()
     {
         UIManager.Instance.ShowPopup(PopupType.Pause);
+        LevelManager.Instance.SetPause(true);
     }
 
 

@@ -15,7 +15,7 @@ public class CounterBase : MonoBehaviour
     {
         int newValue = (int)value;
 
-        if (newValue != _currentValue)
+        //if (newValue != _currentValue)
         {
             _currentValue = newValue;
             
