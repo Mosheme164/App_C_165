@@ -1,13 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class GameScreen : PopupBase
 {
+    private const string TutorialShownKey = "TutorialShown";
+    
     [Space]
     [SerializeField] private ButtonBase pauseButton;
     [SerializeField] private SelfDestruct scoreBubblePrefab;
     [Space]
     [SerializeField] private ButtonBase tutorialButton;
+    [SerializeField] private Image background;
+    [SerializeField] private List<Sprite> skins;
+
+    private Sprite _currentSkin;
+    private bool _isTutorialShown;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        LoadData();
+    }
 
 
     public void CreateBubble()
@@ -20,13 +37,14 @@ public class GameScreen : PopupBase
     }
 
 
-    public void SetTutorial(bool isLonger)
+    public void SetTutorial()
     {
-        var timerValue = isLonger
-            ? 120
-            : 90;
+        if (_isTutorialShown) return;
         
         tutorialButton.gameObject.SetActive(true);
+
+        LevelManager.Instance.SetPause(true);
+        LevelManager.Instance.SetPriority(true);
     }
 
 
@@ -48,6 +66,16 @@ public class GameScreen : PopupBase
     }
 
 
+    protected override void BeforeShow()
+    {
+        base.BeforeShow();
+
+        GetSkin();
+        
+        background.sprite = _currentSkin;
+    }
+
+
     private void PauseButton_OnClick()
     {
         UIManager.Instance.ShowPopup(PopupType.Pause);
@@ -59,5 +87,33 @@ public class GameScreen : PopupBase
     {
         tutorialButton.gameObject.SetActive(false);
         
+        LevelManager.Instance.SetPause(false);
+        LevelManager.Instance.SetPriority(false);
+        LevelManager.Instance.PopFirst();
+
+        _isTutorialShown = true;
+        
+        SaveData();
+    }
+    
+    
+    private void GetSkin()
+    {
+        var currentSkinIndex = SkinManager.Instance.CurrentIndex2;
+
+        _currentSkin = skins[currentSkinIndex];
+    }
+
+
+    private void SaveData()
+    {
+        PlayerPrefs.SetInt(TutorialShownKey, _isTutorialShown ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+
+    private void LoadData()
+    {
+        _isTutorialShown = PlayerPrefs.GetInt(TutorialShownKey) == 1;
     }
 }

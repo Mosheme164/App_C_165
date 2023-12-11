@@ -1591,6 +1591,7 @@ MonoBehaviour:
   settingsButton: {fileID: 7960803884792498359}
   bonusButton: {fileID: 7960803883436417773}
   shopButton: {fileID: 7960803883302141795}
+  shopButton2: {fileID: 7960803882807401017}
   playButton: {fileID: 7960803883140426428}
 --- !u!1 &7960803884659319654
 GameObject:

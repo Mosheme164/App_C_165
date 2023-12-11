@@ -16,6 +16,7 @@ public class ShopItem : MonoBehaviour
     }
 
 
+    [SerializeField] private bool isStadium;
     [SerializeField] private int id;
     [SerializeField] private float price;
     [SerializeField] private List<Text> priceLabelsOld;
@@ -51,17 +52,39 @@ public class ShopItem : MonoBehaviour
         selectButton.OnClick.AddListener(SelectButton_OnClick);
 
         CurrencyManager.Instance.OnCurrencyAmountChanged += CurrencyAmount_OnChange;
-        SkinManager.Instance.OnSelect.AddListener(Skin_OnSelect);
-            
-        var initialState = !SkinManager.Instance.IsPurchased(id)
-            ? ShopItemState.Closed
-            : SkinManager.Instance.CurrentIndex == id
-                ? ShopItemState.Selected
-                : ShopItemState.Opened;
-            
-        ChangeState(initialState);
+
+        Initialize(isStadium);
         
         SetPrice(price);
+    }
+
+
+    private void Initialize(bool isStadium)
+    {
+        ShopItemState initialState;
+        
+        if (isStadium)
+        {
+            SkinManager.Instance.OnSelect2.AddListener(Skin_OnSelect);
+            
+            initialState = !SkinManager.Instance.IsPurchased2(id)
+                ? ShopItemState.Closed
+                : SkinManager.Instance.CurrentIndex2 == id
+                    ? ShopItemState.Selected
+                    : ShopItemState.Opened;
+        }
+        else
+        {
+            SkinManager.Instance.OnSelect.AddListener(Skin_OnSelect);
+            
+            initialState = !SkinManager.Instance.IsPurchased(id)
+                ? ShopItemState.Closed
+                : SkinManager.Instance.CurrentIndex == id
+                    ? ShopItemState.Selected
+                    : ShopItemState.Opened;
+        }
+        
+        ChangeState(initialState);
     }
 
 
@@ -89,8 +112,15 @@ public class ShopItem : MonoBehaviour
         {
             ChangeState(ShopItemState.Opened);
 
-            SkinManager.Instance.BuyPack(id);
-            
+            if (isStadium)
+            {
+                SkinManager.Instance.BuyPack2(id);
+            }
+            else
+            {
+                SkinManager.Instance.BuyPack(id);
+            }
+
             AudioManager.Instance.PlaySound(AudioClipType.Purchase);
         }
     }
@@ -98,7 +128,14 @@ public class ShopItem : MonoBehaviour
 
     private void Select()
     {
-        SkinManager.Instance.SelectPack(id);
+        if (isStadium)
+        {
+            SkinManager.Instance.SelectPack2(id);
+        }
+        else
+        {
+            SkinManager.Instance.SelectPack(id);
+        }
 
         ChangeState(ShopItemState.Selected);
     }
@@ -107,6 +144,18 @@ public class ShopItem : MonoBehaviour
     private void SetInteractable(bool isInteractable)
     {
         buyButton.SetInteractable(isInteractable);
+
+        if (priceLabels != null && priceLabels.Count > 1)
+        {
+            priceLabels[0].gameObject.SetActive(isInteractable);
+            priceLabels[1].gameObject.SetActive(!isInteractable);
+        }
+        
+        if (priceLabelsOld != null && priceLabelsOld.Count > 1)
+        {
+            priceLabelsOld[0].gameObject.SetActive(isInteractable);
+            priceLabelsOld[1].gameObject.SetActive(!isInteractable);
+        }
     } 
     
 

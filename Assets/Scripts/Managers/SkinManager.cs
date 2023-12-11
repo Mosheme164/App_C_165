@@ -11,26 +11,38 @@ public class SkinManager : SingletonMonoBehaviour<SkinManager>
     private class PurchaseData
     {
         public List<int> purchasedIndexes;
+        public List<int> purchasedIndexes2;
     }
     
     
     private const string CurrentSkinIndexKey = "CurrentSkinIndex";
+    private const string CurrentSkinIndexKey2 = "CurrentSkinIndex2";
     private const string PurchasedSkinsKey = "PurchasedSkins";
     
     private PurchaseData _purchaseData;
     private int _currentSkinIndex;
+    private int _currentSkinIndex2;
 
 
     public int CurrentIndex => _currentSkinIndex;
+
+    
+    public int CurrentIndex2 => _currentSkinIndex2;
 
 
     public int PurchasedAmount => _purchaseData.purchasedIndexes.Count;
     
 
     public UnityEvent OnSelect { get; } = new UnityEvent();
+    
+    
+    public UnityEvent OnSelect2 { get; } = new UnityEvent();
+
+
+    public UnityEvent OnBuy { get; } = new UnityEvent();
 
     
-    public UnityEvent OnBuy { get; } = new UnityEvent();
+    public UnityEvent OnBuy2 { get; } = new UnityEvent();
 
     
     protected override void Awake()
@@ -45,6 +57,8 @@ public class SkinManager : SingletonMonoBehaviour<SkinManager>
     {
         OnSelect.RemoveAllListeners();
         OnBuy.RemoveAllListeners();
+        OnSelect2.RemoveAllListeners();
+        OnBuy2.RemoveAllListeners();
     }
 
 
@@ -56,6 +70,16 @@ public class SkinManager : SingletonMonoBehaviour<SkinManager>
         
         OnBuy?.Invoke();
     }
+    
+    
+    public void BuyPack2(int packIndex)
+    {
+        _purchaseData.purchasedIndexes2.Add(packIndex);
+        
+        SaveData();
+        
+        OnBuy2?.Invoke();
+    }
 
 
     public void SelectPack(int packIndex)
@@ -66,12 +90,29 @@ public class SkinManager : SingletonMonoBehaviour<SkinManager>
         
         OnSelect?.Invoke();
     }
+    
+    
+    public void SelectPack2(int packIndex)
+    {
+        _currentSkinIndex2 = packIndex;
+        
+        SaveData();
+        
+        OnSelect2?.Invoke();
+    }
 
 
     public bool IsPurchased(int packIndex)
     {
         return _purchaseData.purchasedIndexes.Contains(packIndex);
     }
+    
+    
+    public bool IsPurchased2(int packIndex)
+    {
+        return _purchaseData.purchasedIndexes2.Contains(packIndex);
+    }
+
 
     private void SaveData()
     {
@@ -79,6 +120,7 @@ public class SkinManager : SingletonMonoBehaviour<SkinManager>
         
         PlayerPrefs.SetString(PurchasedSkinsKey, jsonData);
         PlayerPrefs.SetInt(CurrentSkinIndexKey, _currentSkinIndex);
+        PlayerPrefs.SetInt(CurrentSkinIndexKey2, _currentSkinIndex2);
         PlayerPrefs.Save();
     }
 
@@ -86,6 +128,7 @@ public class SkinManager : SingletonMonoBehaviour<SkinManager>
     private void LoadData()
     {
         _currentSkinIndex = PlayerPrefs.GetInt(CurrentSkinIndexKey);
+        _currentSkinIndex2 = PlayerPrefs.GetInt(CurrentSkinIndexKey2);
         
         string jsonData = PlayerPrefs.GetString(PurchasedSkinsKey);
 
@@ -104,9 +147,11 @@ public class SkinManager : SingletonMonoBehaviour<SkinManager>
     {
         _purchaseData = new PurchaseData()
         {
-            purchasedIndexes = new List<int>{0}
+            purchasedIndexes = new List<int>{0},
+            purchasedIndexes2 = new List<int>{0}
         };
 
         _currentSkinIndex = 0;
+        _currentSkinIndex2 = 0;
     }
 }

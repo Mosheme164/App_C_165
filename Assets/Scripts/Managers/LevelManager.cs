@@ -25,6 +25,20 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
     }
 
 
+    public void SetPriority(bool isPrior)
+    {
+        _spawner.SetPriority(isPrior);
+    }
+
+
+    public void PopFirst()
+    {
+        var tutorialBall = _spawner.TutorialBall;
+
+        Pop(tutorialBall);
+    }
+
+
     public void StartGame()
     {
         _spawner = Instantiate(spawnerPrefab, spawnerRoot);
@@ -120,21 +134,33 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
         {
             if (ball.IsBomb)
             {
-                ball.Explode();
-                
-                AudioManager.Instance.PlaySound(AudioClipType.Lose);
-
-                FinishGame();
+                Explode(ball);
             }
             else
             {
-                UIManager.Instance.GameScreen.CreateBubble();
-                AddCoin();
-
-                Destroy(ball.gameObject);
-                
-                AudioManager.Instance.PlaySound(AudioClipType.ClickSlots);
+                Pop(ball);
             }
         }
+    }
+
+
+    private void Pop(Ball ball)
+    {
+        UIManager.Instance.GameScreen.CreateBubble();
+        AddCoin();
+
+        Destroy(ball.gameObject);
+                
+        AudioManager.Instance.PlaySound(AudioClipType.ClickSlots);
+    }
+
+
+    private void Explode(Ball ball)
+    {
+        ball.Explode();
+                
+        AudioManager.Instance.PlaySound(AudioClipType.Lose);
+
+        FinishGame();
     }
 }

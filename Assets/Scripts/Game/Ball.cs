@@ -19,9 +19,14 @@ public class Ball : MonoBehaviour
     public bool IsBomb => isBomb;
 
 
+    public ReactiveProperty<float> Altitude { get; } = new ReactiveProperty<float>();
+
+
     private void Awake()
     {
         _isPause = false;
+        
+        SetPriority(false);
     }
 
 
@@ -33,6 +38,8 @@ public class Ball : MonoBehaviour
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, -fallSpeed);
         }
+
+        Altitude.Value = transform.localPosition.y;
     }
 
 
@@ -42,6 +49,14 @@ public class Ball : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+
+    public void SetPriority(bool isPrior)
+    {
+        spriteRenderer.sortingOrder = isPrior
+            ? 15
+            : 5;
     }
 
 

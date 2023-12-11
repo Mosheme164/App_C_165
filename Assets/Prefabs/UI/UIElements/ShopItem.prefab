@@ -622,9 +622,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ff6d5975c4d42ed84567b81894d392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStadium: 0
   id: 0
   price: 0
-  priceLabelsOld: []
+  priceLabelsOld:
+  - {fileID: 1135254275731397737}
+  - {fileID: 1718101703101440589}
   priceLabels: []
   buyButton: {fileID: 1135254274800962893}
   selectButton: {fileID: 1135254276453866773}

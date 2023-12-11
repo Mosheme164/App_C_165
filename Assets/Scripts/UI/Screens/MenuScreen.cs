@@ -7,6 +7,7 @@ public class MenuScreen : PopupBase
     [SerializeField] private ButtonBase settingsButton;
     [SerializeField] private SwitchButton bonusButton;
     [SerializeField] private ButtonBase shopButton;
+    [SerializeField] private ButtonBase shopButton2;
     [SerializeField] private ButtonBase playButton;
     
 
@@ -38,6 +39,7 @@ public class MenuScreen : PopupBase
         settingsButton.OnClick.AddListener(SettingsButton_OnClick);
         bonusButton.OnClick.AddListener(BonusButton_OnClick);
         shopButton.OnClick.AddListener(ShopButton_OnClick);
+        shopButton2.OnClick.AddListener(ShopButton2_OnClick);
         playButton.OnClick.AddListener(PlayButton_OnClick);
     }
 
@@ -49,6 +51,7 @@ public class MenuScreen : PopupBase
         settingsButton.OnClick.RemoveListener(SettingsButton_OnClick);
         bonusButton.OnClick.RemoveListener(BonusButton_OnClick);
         shopButton.OnClick.RemoveListener(ShopButton_OnClick);
+        shopButton2.OnClick.RemoveListener(ShopButton2_OnClick);
         playButton.OnClick.RemoveListener(PlayButton_OnClick);
     }
 
@@ -68,6 +71,12 @@ public class MenuScreen : PopupBase
     private void ShopButton_OnClick()
     {
         UIManager.Instance.ShowPopup(PopupType.Shop);
+    }
+    
+    
+    private void ShopButton2_OnClick()
+    {
+        UIManager.Instance.ShowPopup(PopupType.Achievements);
     }
     
     

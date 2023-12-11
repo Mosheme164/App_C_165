@@ -147,8 +147,6 @@ public class CurrencyManager : SingletonMonoBehaviour<CurrencyManager>
         else
         {
             CreateDefaultData();
-            
-            AddCurrency(CurrencyType.Coins, 6f);
         }
     }
 

@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class Spawner : MonoBehaviour
@@ -18,14 +21,27 @@ public class Spawner : MonoBehaviour
     private float _totalTimer;
     private float _timer;
     private bool _isPause;
+    private bool _isFirst;
+
+    private IDisposable _altitudeDisposable;
+
+
+    public Ball TutorialBall => _currentBalls[0];
 
 
     private void Awake()
     {
         _isPause = false;
+        _isFirst = true;
         
         GetSkin();
         StartSpawn();
+    }
+
+
+    private void OnDestroy()
+    {
+        _altitudeDisposable?.Dispose();
     }
 
 
@@ -34,14 +50,6 @@ public class Spawner : MonoBehaviour
         if (_isPause) return;
 
         UpdateTimer();
-    }
-
-
-    public void StartSpawn()
-    {
-        CreateBall();
-
-        SetPause(false);
     }
 
 
@@ -56,6 +64,33 @@ public class Spawner : MonoBehaviour
         }
 
         _isPause = isPause;
+    }
+
+
+    public void SetPriority(bool isPrior)
+    {
+        foreach (var ball in _currentBalls)
+        {
+            ball.SetPriority(isPrior);
+        }
+    }
+    
+    
+    private void StartSpawn()
+    {
+        CreateBall();
+
+        SetPause(false);
+
+        _altitudeDisposable = _currentBalls[0].Altitude.Subscribe(value =>
+        {
+            if (value > 21f)
+            {
+                UIManager.Instance.GameScreen.SetTutorial();
+                
+                _altitudeDisposable?.Dispose();
+            }
+        }).AddTo(this);
     }
     
     
@@ -79,9 +114,13 @@ public class Spawner : MonoBehaviour
     private void CreateBall()
     {
         var randomX = Random.Range(-4f, 4f);
-        var offset = Vector3.right * randomX;
+        var offset = _isFirst
+            ? Vector3.zero
+            : Vector3.right * randomX;
+        
         var randomNumber = Random.Range(0f, 1f);
-        var prefab = randomNumber <= bombChance
+        var currentBombChance = _isFirst ? -1f : bombChance;
+        var prefab = randomNumber <= currentBombChance
             ? bombPrefab
             : ballPrefab;
 
@@ -93,6 +132,8 @@ public class Spawner : MonoBehaviour
         newBall.AddImpulse();
         
         _currentBalls.Add(newBall);
+
+        _isFirst = false;
     }
 
 
