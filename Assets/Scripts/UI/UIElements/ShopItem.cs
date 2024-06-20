@@ -90,18 +90,14 @@ public class ShopItem : MonoBehaviour
 
     private void SetPrice(float amount)
     {
-        price = amount;
-
-        var value = price.ToString();
-
         foreach (var priceLabel in priceLabelsOld)
         {
-            priceLabel.text = value;
+            priceLabel.text = CurrencyCounter.ToIdleNotation((int)amount);
         }
 
         foreach (var priceLabel in priceLabels)
         {
-            priceLabel.text = value;
+            priceLabel.text = CurrencyCounter.ToIdleNotation((int)amount);
         }
     }
 

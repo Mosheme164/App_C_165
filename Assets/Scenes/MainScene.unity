@@ -877,6 +877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca368cddc3f9845839559977e4975669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  continuePrice: 100
   spawnerPrefab: {fileID: 2918881348455685931, guid: 655470c12e2864879a4689e6dcbf9a58, type: 3}
   spawnerRoot: {fileID: 886961947}
 --- !u!1001 &1996278781

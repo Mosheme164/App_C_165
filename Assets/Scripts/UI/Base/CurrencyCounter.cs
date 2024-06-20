@@ -41,9 +41,25 @@ public class CurrencyCounter : CounterBase
     }
 
 
+    public static string ToIdleNotation(int value)
+    {
+        if (value >= 1000000)
+        {
+            return value / 1000000 + "M";
+        }
+        
+        if (value >= 1000)
+        {
+            return value / 1000 + "K";
+        }
+
+        return value.ToString();
+    }
+
+
     protected override string GetFormattedString()
     {
-        return ToSpaceEachThree(_currentValue);
+        return ToIdleNotation(_currentValue);
     }
 
 

@@ -11,8 +11,7 @@ public class ResultScreen : PopupBase
     [SerializeField] private ButtonBase restartButton;
     [SerializeField] private ButtonBase menuButton;
     [SerializeField] private Text coinsAmount;
-
-
+    
     private int _coinsCollected;
 
 
@@ -43,23 +42,14 @@ public class ResultScreen : PopupBase
         _coinsCollected = LevelManager.Instance.CoinsCollected.Value;
         coinsAmount.text = _coinsCollected.ToString();
 
-        var currencyAmount = CurrencyManager.Instance.GetCurrencyAmount(CurrencyType.Coins);
-
-        continueButton.SetInteractable(currencyAmount + _coinsCollected >= 100f);
+        var canContinue = LevelManager.Instance.CanContinue();
+        continueButton.SetInteractable(canContinue);
     }
 
 
-    private void CollectCoins()
-    {
-        CurrencyManager.Instance.AddCurrency(CurrencyType.Coins, _coinsCollected);
-    }
-    
-    
     private void ContinueButton_OnClick()
     {
-        CollectCoins();
-        
-        if (CurrencyManager.Instance.TryRemoveCurrency(CurrencyType.Coins, 100f))
+        if (LevelManager.Instance.TryContinue())
         {
             Observable.Timer(TimeSpan.FromSeconds(.38f)).Subscribe(_ =>
             {
@@ -77,7 +67,7 @@ public class ResultScreen : PopupBase
     
     private void RestartButton_OnClick()
     {
-        CollectCoins();
+        LevelManager.Instance.CollectCoins();
         
         Observable.Timer(TimeSpan.FromSeconds(.38f)).Subscribe(_ =>
         {
@@ -90,7 +80,7 @@ public class ResultScreen : PopupBase
     
     private void MenuButton_OnClick()
     {
-        CollectCoins();
+        LevelManager.Instance.CollectCoins();
         
         Observable.Timer(TimeSpan.FromSeconds(.38f)).Subscribe(_ =>
         {
