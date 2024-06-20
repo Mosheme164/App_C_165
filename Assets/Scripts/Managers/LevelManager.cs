@@ -7,14 +7,19 @@ using UnityEngine.EventSystems;
 
 public class LevelManager : SingletonMonoBehaviour<LevelManager>
 {
+    [SerializeField] private int continuePrice = 100;
     [SerializeField] private Spawner spawnerPrefab;
     [SerializeField] private Transform spawnerRoot;
 
     private Spawner _spawner;
+    private int _coinsAdded;
     private bool _isPause = true;
 
 
     public ReactiveProperty<int> CoinsCollected { get; } = new ReactiveProperty<int>();
+
+
+    public int CoinsToAdd => CoinsCollected.Value - _coinsAdded;
 
 
     private void Update()
@@ -22,6 +27,44 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
         if (_isPause) return;
 
         InputUpdate();
+    }
+    
+    
+    public bool CanContinue()
+    {
+        var bankAmount = CurrencyManager.Instance.GetCurrencyAmount(CurrencyType.Coins);
+        var totalAmount = (int)bankAmount + CoinsToAdd;
+
+        return totalAmount >= continuePrice;
+    }
+    
+    
+    public bool TryContinue()
+    {
+        var bankAmount = CurrencyManager.Instance.GetCurrencyAmount(CurrencyType.Coins);
+        var totalAmount = (int)bankAmount + CoinsToAdd;
+
+        if (totalAmount < continuePrice) return false;
+        
+        if (CoinsToAdd >= continuePrice)
+        {
+            _coinsAdded += continuePrice;
+            return true;
+        }
+        
+        var coinsToRemove = continuePrice - CoinsToAdd;
+        
+        _coinsAdded = CoinsCollected.Value;
+
+        return CurrencyManager.Instance.TryRemoveCurrency(CurrencyType.Coins, coinsToRemove);
+    }
+    
+    
+    public void CollectCoins()
+    {
+        CurrencyManager.Instance.AddCurrency(CurrencyType.Coins, CoinsToAdd);
+        
+        _coinsAdded = CoinsCollected.Value;
     }
 
 
@@ -47,8 +90,7 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
         _spawner.SetPause(false);
 
         CoinsCollected.Value = 0;
-
-        //UIManager.Instance.GameScreen.SetButtons(true);
+        _coinsAdded = 0;
     }
 
 

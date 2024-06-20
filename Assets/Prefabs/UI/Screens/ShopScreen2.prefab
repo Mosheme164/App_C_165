@@ -843,7 +843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1135254276663629821, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: price
-      value: 200
+      value: 200000
       objectReference: {fileID: 0}
     - target: {fileID: 1135254276663629821, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: isStadium
@@ -1119,7 +1119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1135254276663629821, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: price
-      value: 150
+      value: 150000
       objectReference: {fileID: 0}
     - target: {fileID: 1135254276663629821, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: isStadium
@@ -1265,7 +1265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1135254276663629821, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: price
-      value: 50
+      value: 50000
       objectReference: {fileID: 0}
     - target: {fileID: 1135254276663629821, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: isStadium
