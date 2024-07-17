@@ -23,7 +23,7 @@ public class FortuneWheelScreen : PopupBase
         spinButton.SetInteractable(true);
         wheel.ResetWheel();
 
-        SetStateObject(0);
+        SetStateObject(2);
     }
 
 

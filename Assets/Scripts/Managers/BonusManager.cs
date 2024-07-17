@@ -21,7 +21,7 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
     {
         get
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
 
             return $"{23 - now.Hour}:{59 - now.Minute}:{59 - now.Second}";
         }
@@ -37,7 +37,7 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
     public bool IsWheelClaimable => CurrentDay != _lastVisitWheelDay;
 
 
-    private int CurrentDay = DateTime.UtcNow.Day;
+    private int CurrentDay = DateTime.Now.Day;
 
 
     protected override void Awake()

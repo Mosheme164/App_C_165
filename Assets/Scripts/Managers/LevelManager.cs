@@ -97,12 +97,14 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
     public void SetPause(bool isPause)
     {
         _spawner.SetPause(isPause);
+        _isPause = isPause;
     }
 
 
     public void ContinueGame()
     {
         _spawner.SetPause(false);
+        _isPause = false;
     }
 
 
@@ -116,6 +118,7 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
     public void FinishGame()
     {
         _spawner.SetPause(true);
+        _isPause = true;
         
         //UIManager.Instance.GameScreen.SetButtons(false);
 
