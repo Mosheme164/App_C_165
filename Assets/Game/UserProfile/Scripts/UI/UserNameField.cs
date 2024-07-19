@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,18 +23,21 @@ namespace UserProfile.UI
             _editingState.SetActive(false);
         
             _editNameField.onEndEdit.AddListener(SaveNewName);
-            _editNameField.onValueChanged.AddListener(ValidateInput);
+            _editNameField.onValidateInput += ValidateInput;
 
             UserProfileStorage.OnChangedUserName += UpdateNameText;
 
             UpdateNameText(UserProfileStorage.UserName);
         }
-
-        private void ValidateInput(string text)
+        
+        private char ValidateInput(string input, int charIndex, char addedChar)
         {
-            text = text.Replace(" ", "");
-            
-            _editNameField.text = text;
+            if (Regex.IsMatch(addedChar.ToString(), "[^a-zA-Z0-9]"))
+            {
+                addedChar = '\0';
+            }
+
+            return addedChar;
         }
 
         private void OnDestroy()
@@ -60,6 +66,8 @@ namespace UserProfile.UI
             _editNameField.text = UserProfileStorage.UserName;
         
             _editNameField.ActivateInputField();
+            
+            _editNameField.caretPosition = UserProfileStorage.UserName.Length;
         }
     }
 }
