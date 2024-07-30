@@ -51,7 +51,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 1934653181399526552, guid: 3666670889c9749e7a2bed34e9c20096, type: 3}
   bombPrefab: {fileID: 2241723027291303724, guid: 29cf8ed89fea94b668b772ee47c83dfa, type: 3}
   skins:
-  - {fileID: 21300000, guid: 44933e4c9a53d4c53a583c102cc6f102, type: 3}
-  - {fileID: 21300000, guid: eb707eb10438940aa91a5cda4322ccb9, type: 3}
-  - {fileID: 21300000, guid: fc974860926014acca6e97ba9fc9bae0, type: 3}
-  - {fileID: 21300000, guid: bb5c11614effe4ddaa9c940095037b77, type: 3}
+  - {fileID: 21300000, guid: f0f66b369187743709cbb907abb6c2a1, type: 3}
+  - {fileID: 21300000, guid: c19d0b855a2ce4d028b2b4a450f7442c, type: 3}
+  - {fileID: 21300000, guid: 2451c32b5dd1242bd96b80a464c25329, type: 3}
+  - {fileID: 21300000, guid: 4d8eeabd6efdb4603b8ac3c971b757f7, type: 3}
