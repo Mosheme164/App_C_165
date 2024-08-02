@@ -86,8 +86,9 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
     {
         _spawner = Instantiate(spawnerPrefab, spawnerRoot);
         
-        _isPause = false;
+        UIManager.Instance.GameScreen.SetPauseButton(true);
         _spawner.SetPause(false);
+        _isPause = false;
 
         CoinsCollected.Value = 0;
         _coinsAdded = 0;
@@ -97,12 +98,15 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
     public void SetPause(bool isPause)
     {
         _spawner.SetPause(isPause);
+        _isPause = isPause;
     }
 
 
     public void ContinueGame()
     {
+        UIManager.Instance.GameScreen.SetPauseButton(true);
         _spawner.SetPause(false);
+        _isPause = false;
     }
 
 
@@ -116,8 +120,9 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
     public void FinishGame()
     {
         _spawner.SetPause(true);
+        _isPause = true;
         
-        //UIManager.Instance.GameScreen.SetButtons(false);
+        UIManager.Instance.GameScreen.SetPauseButton(false);
 
         Observable.Timer(TimeSpan.FromSeconds(1f)).Subscribe(_ =>
         {

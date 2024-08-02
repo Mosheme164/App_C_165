@@ -12,7 +12,7 @@ namespace UserProfile
         private const string IMAGE_SAVE_FILE = "icon.png";
         private const string NAME_SAVE_KEY = "UserNameSave";
 
-        private const string DEFAULT_USER_NAME = "User";
+        private const string DEFAULT_USER_NAME = "UserName123";
 
         private static Sprite _userIcon = null;
         private static string _userName = null;
@@ -63,6 +63,7 @@ namespace UserProfile
                     OnChangedUserName?.Invoke(_userName);
 
                     PlayerPrefs.SetString(NAME_SAVE_KEY, _userName);
+                    PlayerPrefs.Save();
                 }
             }
         }

@@ -27,6 +27,12 @@ public class GameScreen : PopupBase
     }
 
 
+    public void SetPauseButton(bool isActive)
+    {
+        pauseButton.SetInteractable(isActive);
+    }
+    
+
     public void CreateBubble()
     {
         var newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
