@@ -8,10 +8,12 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
 {
     private const string ConsecDaysKey = "ConsecDays";
     private const string LastVisitKey = "LastVisit";
+    private const string LastVisitWheelKey = "LastVisitWheel";
     
     [SerializeField] private List<int> rewards;
 
     private int _lastVisitDay;
+    private int _lastVisitWheelDay;
     private int _consecDays;
 
 
@@ -19,7 +21,7 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
     {
         get
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
 
             return $"{23 - now.Hour}:{59 - now.Minute}:{59 - now.Second}";
         }
@@ -32,7 +34,10 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
     public bool IsClaimable => CurrentDay != _lastVisitDay;
 
 
-    private int CurrentDay = DateTime.UtcNow.Day;
+    public bool IsWheelClaimable => CurrentDay != _lastVisitWheelDay;
+
+
+    private int CurrentDay = DateTime.Now.Day;
 
 
     protected override void Awake()
@@ -59,9 +64,20 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
     }
 
 
+    public void ClaimWheel(float amount)
+    {
+        CurrencyManager.Instance.AddCurrency(CurrencyType.Coins, amount);
+
+        _lastVisitWheelDay = CurrentDay;
+        
+        SaveData();
+    }
+
+
     private void SaveData()
     {
         PlayerPrefs.SetInt(LastVisitKey, _lastVisitDay);
+        PlayerPrefs.SetInt(LastVisitWheelKey, _lastVisitWheelDay);
         PlayerPrefs.SetInt(ConsecDaysKey, _consecDays);
         PlayerPrefs.Save();
     }
@@ -70,6 +86,7 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
     private void LoadData()
     {
         _lastVisitDay = PlayerPrefs.GetInt(LastVisitKey);
+        _lastVisitWheelDay = PlayerPrefs.GetInt(LastVisitWheelKey);
         _consecDays = PlayerPrefs.GetInt(ConsecDaysKey);
     }
 }

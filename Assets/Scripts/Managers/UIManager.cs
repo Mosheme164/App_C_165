@@ -31,7 +31,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     private void Start()
     {
-        ShowPopup(PopupType.Menu);
+        if (BonusManager.Instance.IsWheelClaimable)
+        {
+            ShowPopup(PopupType.Reward);
+        }
+        else
+        {
+            ShowPopup(PopupType.Menu);
+        }
     }
 
 

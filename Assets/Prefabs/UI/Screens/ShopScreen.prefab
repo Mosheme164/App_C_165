@@ -469,10 +469,10 @@ RectTransform:
   m_Father: {fileID: 6222985165561293677}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3000, y: 3584.5974}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6222985166822532617
 CanvasRenderer:
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 982b94357ea7549e5ba2908c867e1efc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 88c32bc7d3d1c48129a96ceee045f4ec, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -725,10 +725,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3841747369636432089}
     m_Modifications:
+    - target: {fileID: 1135254275311695062, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 1135254275311695063, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: eb707eb10438940aa91a5cda4322ccb9, type: 3}
+      objectReference: {fileID: 21300000, guid: e857112dc4b4943eea724890a979277f, type: 3}
     - target: {fileID: 1135254275731397737, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: m_Text
       value: 10k
@@ -847,10 +851,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3841747369636432089}
     m_Modifications:
+    - target: {fileID: 1135254275311695062, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 266
+      objectReference: {fileID: 0}
     - target: {fileID: 1135254275311695063, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: fc974860926014acca6e97ba9fc9bae0, type: 3}
+      objectReference: {fileID: 21300000, guid: d470d13d14f7449f49224f118717669f, type: 3}
     - target: {fileID: 1135254275731397737, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: m_Text
       value: 30k
@@ -1079,10 +1087,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3841747369636432089}
     m_Modifications:
+    - target: {fileID: 1135254275311695062, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 293
+      objectReference: {fileID: 0}
     - target: {fileID: 1135254275311695063, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: bb5c11614effe4ddaa9c940095037b77, type: 3}
+      objectReference: {fileID: 21300000, guid: 1ecbf2815fbc340daa45dc94a44767c1, type: 3}
     - target: {fileID: 1135254275731397737, guid: 4269e6cdab1f94bb7a770fb53c261b46, type: 3}
       propertyPath: m_Text
       value: 100K
