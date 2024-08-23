@@ -9,7 +9,8 @@ public class MenuScreen : PopupBase
     [SerializeField] private ButtonBase shopButton;
     [SerializeField] private ButtonBase shopButton2;
     [SerializeField] private ButtonBase playButton;
-    
+    [SerializeField] private ButtonBase cardGameButton;
+
 
     protected override void Awake()
     {
@@ -41,6 +42,7 @@ public class MenuScreen : PopupBase
         shopButton.OnClick.AddListener(ShopButton_OnClick);
         shopButton2.OnClick.AddListener(ShopButton2_OnClick);
         playButton.OnClick.AddListener(PlayButton_OnClick);
+        cardGameButton.OnClick.AddListener(CardGameButton_OnClick);
     }
 
 
@@ -53,6 +55,7 @@ public class MenuScreen : PopupBase
         shopButton.OnClick.RemoveListener(ShopButton_OnClick);
         shopButton2.OnClick.RemoveListener(ShopButton2_OnClick);
         playButton.OnClick.RemoveListener(PlayButton_OnClick);
+        cardGameButton.OnClick.RemoveListener(CardGameButton_OnClick);
     }
 
 
@@ -84,6 +87,14 @@ public class MenuScreen : PopupBase
     {
         LevelManager.Instance.StartGame();
         UIManager.Instance.ShowPopup(PopupType.GameScore);
+        
+        Hide();
+    }
+
+
+    private void CardGameButton_OnClick()
+    {
+        UIManager.Instance.ShowPopup(PopupType.GameLevel);
         
         Hide();
     }

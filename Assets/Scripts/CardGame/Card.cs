@@ -6,28 +6,34 @@ using UnityEngine.UI;
 
 public class Card : StateObject
 {
-    public event Action<Card> OnClick = delegate {  };
+    public event Action<Card> OnClick = delegate { };
     
     
     [SerializeField] private Image openedImage;
     [SerializeField] private Button button;
     
     private int _currentValue;
+    private Vector3 defaultPosition;
     private Sequence _swapSequence;
+    private Tween _removeTween;
 
 
     public int CurrentValue => _currentValue;
 
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+        
+        defaultPosition = transform.localPosition;
         button.onClick.AddListener(() => OnClick?.Invoke(this));
     }
 
 
     private void OnDestroy()
     {
-        button.onClick.RemoveAllListeners(); 
+        button.onClick.RemoveAllListeners();
+        OnClick = null;
     }
 
 
@@ -40,20 +46,28 @@ public class Card : StateObject
     }
 
 
+    public void ResetPosition()
+    {
+        transform.localPosition = defaultPosition;
+    }
+
+
     public void SetPause(bool isPause)
     {
         if (isPause)
         {
             _swapSequence?.Pause();
+            _removeTween?.Pause();
         }
         else
         {
             _swapSequence?.Play();
+            _removeTween?.Play();
         }
     }
 
 
-    public void SwapCard(Action callback = null)
+    public void FlipCard(Action callback = null)
     {
         var targetState = _currentState == 0 ? 1 : 0;
         
@@ -66,5 +80,19 @@ public class Card : StateObject
         _swapSequence.OnComplete(() => callback?.Invoke());
 
         _swapSequence.Play();
+    }
+
+
+    public void RemoveCard(Action callback = null)
+    {
+        _removeTween?.Kill();
+        _removeTween = transform.DOLocalMove(defaultPosition + Vector3.up * 300f, 1f)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+                
+                callback?.Invoke();
+            });
     }
 }

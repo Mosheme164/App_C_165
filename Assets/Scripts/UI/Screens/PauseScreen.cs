@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PauseScreen : PopupBase
 {
-    [Space]
+    [Space] 
+    [SerializeField] private bool isCardGame;
     [SerializeField] private ButtonBase continueButton;
     [SerializeField] private ButtonBase restartButton;
     [SerializeField] private ButtonBase menuButton;
@@ -31,15 +32,29 @@ public class PauseScreen : PopupBase
 
     private void ContinueButton_OnClick()
     {
-        LevelManager.Instance.ContinueGame();
-            
+        if (isCardGame)
+        {
+            UIManager.Instance.CardGameScreen.SetPause(false);
+        }
+        else
+        {
+            LevelManager.Instance.ContinueGame();
+        }
+
         Hide();
     }
     
     
     private void RestartButton_OnClick()
     {
-        LevelManager.Instance.RestartGame();
+        if (isCardGame)
+        {
+            UIManager.Instance.CardGameScreen.StartGame();
+        }
+        else
+        {
+            LevelManager.Instance.RestartGame();
+        }
 
         Hide();
     }
@@ -47,8 +62,15 @@ public class PauseScreen : PopupBase
     
     private void MenuButton_OnClick()
     {
-        UIManager.Instance.ShowPopup(PopupType.Lose);
-        
+        if (isCardGame)
+        {
+            UIManager.Instance.ShowPopup(PopupType.CardExit);
+        }
+        else
+        {
+            UIManager.Instance.ShowPopup(PopupType.Exit);
+        }
+
         Hide();
     }
 }

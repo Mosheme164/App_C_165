@@ -16,6 +16,6 @@
     Lose                = 12,
     Win                 = 13,
     Result              = 14,
-    Engine              = 15,
-    Nitro               = 16,
+    Success             = 15,
+    Denial              = 16,
 }

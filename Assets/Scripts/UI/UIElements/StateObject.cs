@@ -10,7 +10,7 @@ public class StateObject : MonoBehaviour
     protected int _currentState;
     
 
-    private void Awake()
+    protected virtual void Awake()
     {
         SetState(defaultState);
     }

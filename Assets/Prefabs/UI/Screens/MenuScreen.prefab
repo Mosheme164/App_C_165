@@ -1836,6 +1836,7 @@ MonoBehaviour:
   shopButton: {fileID: 7960803883302141795}
   shopButton2: {fileID: 7960803882807401017}
   playButton: {fileID: 7960803883140426428}
+  cardGameButton: {fileID: 1822134223187029607}
 --- !u!1 &7960803884659319654
 GameObject:
   m_ObjectHideFlags: 0
