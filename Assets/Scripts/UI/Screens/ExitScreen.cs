@@ -5,6 +5,7 @@ public class ExitScreen : PopupBase
 {
     [Space] 
     [SerializeField] private bool isCardGame;
+    [SerializeField] private bool isRestart;
     [SerializeField] private ButtonBase yesButton;
     [SerializeField] private ButtonBase noButton;
     
@@ -29,16 +30,30 @@ public class ExitScreen : PopupBase
 
     private void YesButton_OnClick()
     {
-        if (isCardGame)
+        if (isRestart)
         {
-            UIManager.Instance.ShowPopup(PopupType.Menu);
-            UIManager.Instance.HidePopup(PopupType.GameLevel);
+            if (isCardGame)
+            {
+                UIManager.Instance.CardGameScreen.StartGame();
+            }
+            else
+            {
+                LevelManager.Instance.RestartGame();
+            }
         }
         else
         {
-            UIManager.Instance.ShowPopup(PopupType.Menu);
-            UIManager.Instance.HidePopup(PopupType.GameScore);
-            LevelManager.Instance.ClearGame();
+            if (isCardGame)
+            {
+                UIManager.Instance.ShowPopup(PopupType.Menu);
+                UIManager.Instance.HidePopup(PopupType.GameLevel);
+            }
+            else
+            {
+                UIManager.Instance.ShowPopup(PopupType.Menu);
+                UIManager.Instance.HidePopup(PopupType.GameScore);
+                LevelManager.Instance.ClearGame();
+            }
         }
 
         Hide();
@@ -47,14 +62,9 @@ public class ExitScreen : PopupBase
     
     private void NoButton_OnClick()
     {
-        if (isCardGame)
-        {
-            UIManager.Instance.ShowPopup(PopupType.CardPause);
-        }
-        else
-        {
-            UIManager.Instance.ShowPopup(PopupType.Pause);
-        }
+        UIManager.Instance.ShowPopup(isCardGame 
+            ? PopupType.CardPause 
+            : PopupType.Pause);
 
         Hide();
     }

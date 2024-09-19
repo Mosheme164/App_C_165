@@ -47,14 +47,9 @@ public class PauseScreen : PopupBase
     
     private void RestartButton_OnClick()
     {
-        if (isCardGame)
-        {
-            UIManager.Instance.CardGameScreen.StartGame();
-        }
-        else
-        {
-            LevelManager.Instance.RestartGame();
-        }
+        UIManager.Instance.ShowPopup(isCardGame
+            ? PopupType.CardRestart
+            : PopupType.Restart);
 
         Hide();
     }
@@ -62,14 +57,9 @@ public class PauseScreen : PopupBase
     
     private void MenuButton_OnClick()
     {
-        if (isCardGame)
-        {
-            UIManager.Instance.ShowPopup(PopupType.CardExit);
-        }
-        else
-        {
-            UIManager.Instance.ShowPopup(PopupType.Exit);
-        }
+        UIManager.Instance.ShowPopup(isCardGame 
+            ? PopupType.CardExit 
+            : PopupType.Exit);
 
         Hide();
     }
