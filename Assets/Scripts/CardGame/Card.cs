@@ -34,6 +34,9 @@ public class Card : StateObject
     {
         button.onClick.RemoveAllListeners();
         OnClick = null;
+        
+        _swapSequence?.Kill();
+        _removeTween?.Kill();
     }
 
 
@@ -46,8 +49,12 @@ public class Card : StateObject
     }
 
 
-    public void ResetPosition()
+    public void ResetState()
     {
+        _swapSequence?.Kill();
+        _removeTween?.Kill();
+        
+        transform.localScale = Vector3.one;
         transform.localPosition = defaultPosition;
     }
 
