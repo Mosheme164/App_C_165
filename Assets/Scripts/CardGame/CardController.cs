@@ -9,8 +9,8 @@ using Random = UnityEngine.Random;
 public class CardController : MonoBehaviour
 {
     public event Action<bool> OnGameFinish = delegate { };
-    
-    
+
+
     private const float GameDuration = 106f;
 
     [SerializeField] private GameObject fader;
@@ -135,7 +135,7 @@ public class CardController : MonoBehaviour
             
             card.gameObject.SetActive(true);
             card.Initialize(value, cardSprites[value]);
-            card.ResetPosition();
+            card.ResetState();
         }
         
         _flippedCards.Clear();
