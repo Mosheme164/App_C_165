@@ -12,8 +12,8 @@ public class BonusScreen : PopupBase
     {
         base.BeforeShow();
 
-        rewardAmount.text = BonusManager.Instance.CurrentReward.ToString();
         BonusManager.Instance.ClaimReward();
+        rewardAmount.text = BonusManager.Instance.CurrentReward.ToString();
     }
 
 

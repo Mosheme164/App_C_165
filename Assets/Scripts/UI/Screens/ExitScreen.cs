@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class ExitScreen : PopupBase
 {
-    [Space]
+    [Space] 
+    [SerializeField] private bool isCardGame;
+    [SerializeField] private bool isRestart;
     [SerializeField] private ButtonBase yesButton;
     [SerializeField] private ButtonBase noButton;
     
@@ -28,18 +30,42 @@ public class ExitScreen : PopupBase
 
     private void YesButton_OnClick()
     {
-        UIManager.Instance.ShowPopup(PopupType.Menu);
-        UIManager.Instance.HidePopup(PopupType.GameScore);
-        LevelManager.Instance.ClearGame();
-        
+        if (isRestart)
+        {
+            if (isCardGame)
+            {
+                UIManager.Instance.CardGameScreen.StartGame();
+            }
+            else
+            {
+                LevelManager.Instance.RestartGame();
+            }
+        }
+        else
+        {
+            if (isCardGame)
+            {
+                UIManager.Instance.ShowPopup(PopupType.Menu);
+                UIManager.Instance.HidePopup(PopupType.GameLevel);
+            }
+            else
+            {
+                UIManager.Instance.ShowPopup(PopupType.Menu);
+                UIManager.Instance.HidePopup(PopupType.GameScore);
+                LevelManager.Instance.ClearGame();
+            }
+        }
+
         Hide();
     }
     
     
     private void NoButton_OnClick()
     {
-        UIManager.Instance.ShowPopup(PopupType.Pause);
-        
+        UIManager.Instance.ShowPopup(isCardGame 
+            ? PopupType.CardPause 
+            : PopupType.Pause);
+
         Hide();
     }
 }

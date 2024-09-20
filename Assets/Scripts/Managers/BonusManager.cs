@@ -37,7 +37,7 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
     public bool IsWheelClaimable => CurrentDay != _lastVisitWheelDay;
 
 
-    private int CurrentDay = DateTime.Now.Day;
+    private int CurrentDay => DateTime.Now.Day;
 
 
     protected override void Awake()
@@ -50,10 +50,16 @@ public class BonusManager : SingletonMonoBehaviour<BonusManager>
 
     public void ClaimReward()
     {
-        _consecDays = CurrentDay == _lastVisitDay + 1
-            ? Mathf.Clamp(_consecDays++, 0, 6)
-            : 0;
-        
+        if (CurrentDay == _lastVisitDay + 1)
+        {
+            _consecDays++;
+            _consecDays = Mathf.Clamp(_consecDays, 0, 6);
+        }
+        else
+        {
+            _consecDays = 0;
+        }
+
         CurrencyManager.Instance.AddCurrency(CurrencyType.Coins, CurrentReward);
 
         _lastVisitDay = CurrentDay;
