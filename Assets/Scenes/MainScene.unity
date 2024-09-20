@@ -1302,8 +1302,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rewards: 0a0000000f00000014000000190000001e0000002800000032000000
-  _lastVisitDay: 0
-  _consecDays: 0
 --- !u!1 &1897105151
 GameObject:
   m_ObjectHideFlags: 0
